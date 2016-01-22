@@ -1,4 +1,4 @@
-#:coding=utf-8:
+# -*- coding:utf-8 -*-
 
 import base64
 import warnings
@@ -17,9 +17,9 @@ from django import VERSION as DJANGO_VERSION
 from django.core import exceptions
 from django.utils.translation import ugettext_lazy as _
 try:
-   from django.db import load_backend
+    from django.db import load_backend
 except ImportError:
-   from django.db.utils import load_backend
+    from django.db.utils import load_backend
 from django.db.models import BigIntegerField
 
 from django.db import models

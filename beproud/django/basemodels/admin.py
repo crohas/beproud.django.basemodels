@@ -1,6 +1,7 @@
-#:coding=utf-8:
+# -*- coding:utf-8 -*-
 
 from django.contrib import admin
+
 
 class DatedModelAdmin(admin.ModelAdmin):
     u"""
@@ -14,7 +15,7 @@ class DatedModelAdmin(admin.ModelAdmin):
     declared_fieldsets を定義すれば、system_fields は無視されます
 
     system_fields のデフォールトは::
-    
+
         system_fields = ('ctime', 'utime')
 
     デフォールト設定を外したい場合は None を設定すれば、
@@ -24,10 +25,10 @@ class DatedModelAdmin(admin.ModelAdmin):
 
     使い方::
 
-        class MyModelAdmin(DatedModelAdmin):
-            list_display = ('myfield', 'del_flg', 'utime', 'ctime')
-            system_fields = ('my_system_field',) + DatedModelAdmin.system_fields
-            #...
+       class MyModelAdmin(DatedModelAdmin):
+           list_display = ('myfield', 'del_flg', 'utime', 'ctime')
+           system_fields = ('my_system_field',) + DatedModelAdmin.system_fields
+           #...
     """
     date_hierarchy = 'ctime'
     list_display = ('__str__', 'utime', 'ctime')
@@ -45,22 +46,24 @@ class DatedModelAdmin(admin.ModelAdmin):
             return super(DatedModelAdmin, self).get_fieldsets(request, obj)
 
         form = self.get_form(request, obj)
-        fields = form.base_fields.keys() + list(self.get_readonly_fields(request, obj))
+        fields = (form.base_fields.keys() +
+                  list(self.get_readonly_fields(request, obj)))
         normal_fields = [f for f in fields if f not in self.system_fields]
 
         return (
             (None, {'fields': normal_fields}),
             (u"システム管理", {
                 'classes': ('collapse',),
-                'fields': self.system_fields, 
+                'fields': self.system_fields,
             }),
         )
+
 
 class BaseModelAdmin(DatedModelAdmin):
     u"""
     BaseModel のサブクラスの管理画面用のベースクラス
 
-    使い方:: 
+    使い方::
 
         class MyModelAdmin(BaseModelAdmin):
             list_display = ('myfield', 'del_flg', 'utime', 'ctime')

@@ -1,4 +1,4 @@
-#:coding=utf-8:
+# -*- coding:utf-8 -*-
 
 from django.db import models
 from datetime import datetime
@@ -10,9 +10,11 @@ __all__ = (
     'BaseModel',
 )
 
+
 class DatedModelManager(models.Manager):
     def recently_updated(self):
         return self.order_by('-utime')
+
 
 class DatedModel(models.Model):
     """
@@ -27,6 +29,7 @@ class DatedModel(models.Model):
         abstract = True
         ordering = ['-ctime']
 
+
 class BaseManager(DatedModelManager):
     def be(self):
         """
@@ -34,10 +37,11 @@ class BaseManager(DatedModelManager):
         """
         return self.filter(del_flg=False)
 
+
 class BaseModel(DatedModel):
     """
     BaseModelの実装
-    
+
     使い方:
     from django.db import models
     from commons.models import BaseModel
@@ -56,7 +60,7 @@ class BaseModel(DatedModel):
         self.save()
 
     def unremove(self):
-        self.del_flg = False 
+        self.del_flg = False
         self.save()
 
     class Meta:
