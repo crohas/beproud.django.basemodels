@@ -5,7 +5,14 @@ __all__ = (
     'copy_obj',
 )
 
-def compare_obj(base_obj, new_obj, check_primary_key=False, check_related=False, exclude=[], check_related_id=False, display=False):
+
+def compare_obj(
+        base_obj, new_obj,
+        check_primary_key=False,
+        check_related=False,
+        exclude=[],
+        check_related_id=False,
+        display=False):
     """
     モデルインスタンスの比較を行う
     差分を辞書で返す
@@ -68,7 +75,13 @@ def compare_obj(base_obj, new_obj, check_primary_key=False, check_related=False,
             )
     return diff_dict
 
-def copy_obj(from_obj, to_obj, check_primary_key=False, check_related=False, exclude=[], copy_related_id=False, check_many_to_many=False):
+
+def copy_obj(from_obj, to_obj,
+             check_primary_key=False,
+             check_related=False,
+             exclude=[],
+             copy_related_id=False,
+             check_many_to_many=False):
     """
     モデルインスタンスのフィールドの内容をコピーする
     """

@@ -57,18 +57,23 @@ class BigAutoField(models.AutoField):
                     if isinstance(connection, DatabaseWrapper):
                         return db_type
                     elif DJANGO_VERSION >= (1, 7):
-                        from django.db import DefaultConnectionProxy, connections
+                        from django.db import (
+                            DefaultConnectionProxy,
+                            connections,
+                        )
                         from django.db.utils import DEFAULT_DB_ALIAS
                         if (isinstance(connection, DefaultConnectionProxy) and
+                           isinstance(connections[DEFAULT_DB_ALIAS],
+                                      DatabaseWrapper)):
 
-                                isinstance(connections[DEFAULT_DB_ALIAS], DatabaseWrapper)):
                             return db_type
                 except (ImportError, exceptions.ImproperlyConfigured):
                     pass
         except (KeyError, AttributeError):
             pass
-        raise exceptions.ImproperlyConfigured('BigAutoField does not support the "%s" database '
-                                              'backend' % connection.settings_dict["ENGINE"])
+        raise exceptions.ImproperlyConfigured(
+            'BigAutoField does not support the "%s" database '
+            'backend' % connection.settings_dict["ENGINE"])
 
     def get_internal_type(self):
         return "BigAutoField"
@@ -125,7 +130,10 @@ class PickledObjectField(models.TextField):
     __metaclass__ = models.SubfieldBase
 
     def __init__(self, *args, **kwargs):
-        warnings.warn('PickledObjectField is deprecated. Use django-picklefield instead.')
+        warnings.warn(
+            'PickledObjectField is deprecated. Use django-picklefield instead.'
+        )
+
         super(PickledObjectField, self).__init__(*args, **kwargs)
 
     def to_python(self, value):
