@@ -7,6 +7,7 @@ requires = [
 
 setup(
     name="beproud.django.basemodels",
+    version="0.0.0",
     packages=find_packages(),
     namespace_packages=[
         "beproud",
